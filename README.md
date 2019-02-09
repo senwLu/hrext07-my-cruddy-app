@@ -13,3 +13,15 @@ Create Read Update and Delete framework using JS
 
 ### Advanced Reqs
 - [ ] Item that I added goes here...
+
+
+### Sen's Project Idea
+Stock price watcherlist
+    => get stock price & name with just stock ticker
+
+### Basic Reqs
+- [ ] Which stock API to use?   
+- [ ] How to caputure data?     (from form & stock API)
+- [ ] Where to store data?      (from form & stock API)
+- [ ] How to modify data?       (update, delete)
+- [ ] UI/UX considerations
