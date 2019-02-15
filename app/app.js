@@ -20,6 +20,7 @@ $(document).ready(function(){
 
   if(localStorage.getItem('isLocked') === "true") {
     $('.container-form').hide();
+    $('.container-form-pwd-edit').hide();
     $('.container-form-password').show();
     // clear out divs in data container so can't view from console during lock
     $('.container-data').text('');
@@ -36,6 +37,7 @@ $(document).ready(function(){
       localStorage.setItem('isLocked', false);
       $('.container-data').text('');
       $('.container-form').show();
+      $('.container-form-pwd-edit').show();
       $('.container-form-password').hide();
       $('.input-pwd').val('');
       $('.lock').text('Lock Data');
@@ -44,6 +46,16 @@ $(document).ready(function(){
       $('.input-pwd').val('');
       $('.container-data').html('Password is incorrect!');
     }
+  });
+
+  $('.pwd-edit').click(function() {  
+    var input_pwd_edit = $('.input-pwd-edit').val();
+    if(input_pwd_edit.indexOf(' ') >= 0) {
+      console.log('must have input, not space or empty')
+    }else {
+      localStorage.setItem('password', input_pwd_edit);
+    }
+    $('.input-pwd-edit').val(" ");
   });
 
   $('.btn-add').on('click', function(){
@@ -61,21 +73,28 @@ $(document).ready(function(){
       // write to db
       localStorage.setItem(keyData, valueData);
   
-      $('.container-data').append('<div class="display-data-item" data-keyValue="' + keyData + '">'+valueData+'</div>');
-    }
+      $('.container-data').append('<div class="value-box">' + 
+                                    '<div class="display-data-item" data-keyValue="' + keyData + '">'+valueData+'</div>' +
+                                    '<button class="btn btn-danger btn-delete">Delete</button>' + 
+                                    // '<button class="btn btn-primary btn-add">Edit</button>' +
+                                  '</div>');
+      }
+      $('.input-data').val('');
   });
 
   $('.btn-delete').click(function() {  
     $(this).parent().remove();
     var targetKey = $(this).closest('div').find('.display-data-item').attr('data-keyValue');
     localStorage.removeItem(targetKey);
-  })
+  });
+  
 
   // click to lock user from seeing data
   $('.lock').click(function() {
       if($('.container-form').css('display') !== 'none')  {
         localStorage.setItem('isLocked', true);
         $('.container-form').hide();
+        $('.container-form-pwd-edit').hide();
         $('.container-form-password').show();
         // clear out divs in data container so can't view from console during lock
         $('.container-data').text('');
@@ -103,6 +122,7 @@ $(document).ready(function(){
             append('<div class="value-box">' + 
                       '<div class="display-data-item" data-keyValue="'+ keys_LS[i] +'">' + localStorage[keys_LS[i]] + '</div>' + 
                       '<button class="btn btn-danger btn-delete">Delete</button>' + 
+                      // '<button class="btn btn-primary btn-add">Edit</button>' +
                     '</div>');
         }           
       }

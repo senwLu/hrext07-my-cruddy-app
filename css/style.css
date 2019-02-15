@@ -17,8 +17,22 @@
     margin-top: 25px;
 }
 
+.container-form-pwd-edit {
+    margin-top: 25px;
+}
+
+.pwd-edit {
+    margin-left :20px;
+    width: 100px;
+}
+
 .container-form {
     margin-top: 25px;
+}
+
+.btn-add {
+    margin-left: 20px;
+    width: 100px;
 }
 
 .container-data {
