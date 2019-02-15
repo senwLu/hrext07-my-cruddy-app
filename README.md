@@ -16,12 +16,11 @@ Create Read Update and Delete framework using JS
 
 
 ### Sen's Project Idea
-Stock price watcherlist
-    => get stock price & name with just stock ticker
+Data List with lock/unlock mechanism
 
-### Basic Reqs
-- [ ] Which stock API to use?   
-- [ ] How to caputure data?     (from form & stock API)
-- [ ] Where to store data?      (from form & stock API)
+### Basic Reqs  
+- [ ] How to caputure data?     (from form & Forex API)
+- [ ] Where to store data?      (from form & Forex API)
 - [ ] How to modify data?       (update, delete)
+- [ ] How to lock/unlock data?
 - [ ] UI/UX considerations
