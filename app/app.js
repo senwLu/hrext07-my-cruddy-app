@@ -14,15 +14,37 @@ $(document).ready(function(){
     localStorage.setItem('password', 12345);
   }
 
-  if(!localStorage.getItem('lockChecker')) {
-    localStorage.setItem('lockChecker', false);
+  if(!localStorage.getItem('isLocked')) {
+    localStorage.setItem('isLocked', false);
   }
-  
 
-  var keys_LS = Object.keys(localStorage);
+  if(localStorage.getItem('isLocked') === "true") {
+    $('.container-form').hide();
+    $('.container-form-password').show();
+    // clear out divs in data container so can't view from console during lock
+    $('.container-data').text('');
+    $('.lock').text('Enter Password to Unlock Data');
+  }else {
+    $('.container-form-password').hide();
+    generateList();
+  }
 
-  generateList();
+  $('.pwd-submit').click(function() {
+    var input_pwd = $('.input-pwd').val();
 
+    if(localStorage.getItem('password') === input_pwd) {
+      localStorage.setItem('isLocked', false);
+      $('.container-data').text('');
+      $('.container-form').show();
+      $('.container-form-password').hide();
+      $('.input-pwd').val('');
+      $('.lock').text('Lock Data');
+      generateList();
+    }else {
+      $('.input-pwd').val('');
+      $('.container-data').html('Password is incorrect!');
+    }
+  })
 
   $('.btn-add').on('click', function(){
     var valueData = $('.input-data').val();
@@ -41,20 +63,17 @@ $(document).ready(function(){
   
       $('.container-data').append('<div class="display-data-item">'+valueData+'</div>');
     }
-
   });
 
   // click to lock user from seeing data
   $('.lock').click(function() {
-      if($('.container-form').css('display') == 'none') {
-        $('.container-form').show();
-        $('.lock').text('Lock Data');
-        generateList();
-      }else {
+      if($('.container-form').css('display') !== 'none')  {
+        localStorage.setItem('isLocked', true);
         $('.container-form').hide();
+        $('.container-form-password').show();
         // clear out divs in data container so can't view from console during lock
         $('.container-data').text('');
-        $('.lock').text('Unlock Data');
+        $('.lock').text('Enter Password to Unlock Data');
       }
   })
 
@@ -63,13 +82,17 @@ $(document).ready(function(){
     localStorage.clear();
     $('.container-data').text('');
     localStorage.setItem('password', 12345);
-    localStorage.setItem('lockChecker', false);
+    localStorage.setItem('isLocked', false);
   });
 
+
+  // function for generating list of data from localStorage
   function generateList() {
+    var keys_LS = Object.keys(localStorage);
+
     if(keys_LS.length !== 1){
       for(var i=0; i < keys_LS.length; i++) {
-        if(keys_LS[i] !== 'password' && keys_LS[i] !== 'lockChecker' ) {
+        if(keys_LS[i] !== 'password' && keys_LS[i] !== 'isLocked' ) {
           $('.container-data').append('<div class="display-data-item" data-keyValue="'+ keys_LS[i] +'">' + localStorage[keys_LS[i]] + '</div>');
         }
       }
