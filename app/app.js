@@ -44,7 +44,7 @@ $(document).ready(function(){
       $('.input-pwd').val('');
       $('.container-data').html('Password is incorrect!');
     }
-  })
+  });
 
   $('.btn-add').on('click', function(){
     var valueData = $('.input-data').val();
@@ -61,9 +61,15 @@ $(document).ready(function(){
       // write to db
       localStorage.setItem(keyData, valueData);
   
-      $('.container-data').append('<div class="display-data-item">'+valueData+'</div>');
+      $('.container-data').append('<div class="display-data-item" data-keyValue="' + keyData + '">'+valueData+'</div>');
     }
   });
+
+  $('.btn-delete').click(function() {  
+    $(this).parent().remove();
+    var targetKey = $(this).closest('div').find('.display-data-item').attr('data-keyValue');
+    localStorage.removeItem(targetKey);
+  })
 
   // click to lock user from seeing data
   $('.lock').click(function() {
@@ -75,7 +81,7 @@ $(document).ready(function(){
         $('.container-data').text('');
         $('.lock').text('Enter Password to Unlock Data');
       }
-  })
+  });
 
   // delete all data and rest password to "factory" setting
   $('.btn-clear').click(function(){
@@ -93,8 +99,12 @@ $(document).ready(function(){
     if(keys_LS.length !== 1){
       for(var i=0; i < keys_LS.length; i++) {
         if(keys_LS[i] !== 'password' && keys_LS[i] !== 'isLocked' ) {
-          $('.container-data').append('<div class="display-data-item" data-keyValue="'+ keys_LS[i] +'">' + localStorage[keys_LS[i]] + '</div>');
-        }
+          $('.container-data').
+            append('<div class="value-box">' + 
+                      '<div class="display-data-item" data-keyValue="'+ keys_LS[i] +'">' + localStorage[keys_LS[i]] + '</div>' + 
+                      '<button class="btn btn-danger btn-delete">Delete</button>' + 
+                    '</div>');
+        }           
       }
     }
   }

@@ -28,3 +28,13 @@
 .lock {
     margin-top: 25px;
 }
+
+.value-box {
+    display: flex;
+    margin: 10px;
+}
+
+.display-data-item {
+    width: 100px;
+    text-align: center;
+}
